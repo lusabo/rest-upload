@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://maven.apache.org/POM/4.0.0"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
@@ -7,7 +8,7 @@
 	<groupId>com</groupId>
 	<artifactId>rest-upload</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>jar</packaging>
+	<packaging>war</packaging>
 
 	<name></name>
 	<description></description>
@@ -15,21 +16,79 @@
 
 	<parent>
 		<groupId>br.gov.frameworkdemoiselle</groupId>
-		<artifactId>demoiselle-minimal-parent</artifactId>
-		<version>2.4.0</version>
+		<artifactId>demoiselle-rest-parent</artifactId>
+		<version>2.5.0-SNAPSHOT</version>
 	</parent>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.jboss.as</groupId>
+				<artifactId>jboss-as-parent</artifactId>
+				<version>${jboss.as.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 
 	<dependencies>
 		<dependency>
 			<groupId>br.gov.frameworkdemoiselle.component</groupId>
-			<artifactId>demoiselle-junit</artifactId>
-			<version>2.3.0</version>
-			<scope>test</scope>
+			<artifactId>demoiselle-resteasy</artifactId>
+			<version>${demoiselle.resteasy.version}</version>
+			<scope>compile</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-log4j12</artifactId>
-			<scope>test</scope>
+			<groupId>org.jboss.resteasy</groupId>
+			<artifactId>resteasy-multipart-provider</artifactId>
+			<version>2.3.5.Final</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.0.1</version>
 		</dependency>
 	</dependencies>
+
+	<profiles>
+		<profile>
+			<id>jboss7</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<dependencies>
+				<!-- RESTful Web Services dependencies -->
+				<dependency>
+					<groupId>org.jboss.resteasy</groupId>
+					<artifactId>resteasy-jaxrs</artifactId>
+					<scope>provided</scope>
+				</dependency>
+				<dependency>
+					<groupId>org.jboss.resteasy</groupId>
+					<artifactId>resteasy-hibernatevalidator-provider</artifactId>
+					<scope>provided</scope>
+				</dependency>
+			</dependencies>
+		</profile>
+	</profiles>
+	
+	<repositories>
+		<repository>
+			<id>sonatype-nexus-snapshots</id>
+			<name>Sonatype Nexus Snapshots</name>
+			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+		</repository>
+	</repositories>
+	
+	<properties>
+		<jboss.as.version>7.2.0.Final</jboss.as.version>
+		<demoiselle.resteasy.version>1.0.0-SNAPSHOT</demoiselle.resteasy.version>
+
+		<maven.source.plugin.version>2.2.1</maven.source.plugin.version>
+		<source.skip>true</source.skip>
+		<maven.javadoc.skip>true</maven.javadoc.skip>
+	</properties>
+	
+	
 </project>
