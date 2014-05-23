@@ -1,0 +1,10 @@
+/bin
+/*.log
+/target
+/.project
+/.classpath
+/.settings
+/.externalToolBuilders
+/.DS_Store
+/src/main/webapp/WEB-INF/lib
+/target
